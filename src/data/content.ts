@@ -218,7 +218,7 @@ export const CONTENT_BY_LANG: Record<Language, PageContent> = {
     tours: {
       tag: "Arqueología e Historia",
       title: "Recorrido por la Zona Arqueológica de Ek Balam",
-      subtitle: "Explora la misteriosa 'Estrella Negra' (Ek' Balam), sus murales de estuco y la tumba real maya.",
+      subtitle: "Explora la misteriosa 'Estrella Jaguar' (Ek' Balam), sus murales de estuco y la tumba real maya.",
       items: [
         {
           id: "ekbalam-ruins",
@@ -226,7 +226,7 @@ export const CONTENT_BY_LANG: Record<Language, PageContent> = {
           category: "Arqueología y Cosmovisión",
           duration: "1 Hora (aprox.)",
           price: "Servicio de guía personalizado",
-          description: "Recorrido especializado por la Acrópolis, la Plaza Central, la tumba de Ukit Kan Lek Tok' y las intrincadas fachadas de estuco de gobernantes y jaguares alados.",
+          description: "Recorrido especializado por la Acrópolis, la Plaza Central, la tumba de Ukit Kan Lek Tok' y las intrincadas fachadas de estuco de gobernantes y seres alados.",
           includes: [
             "Guía oficial certificado SECTUR NOM-08",
             "Explicación en Español, Inglés, Francés o Maya",
@@ -442,7 +442,7 @@ export const CONTENT_BY_LANG: Record<Language, PageContent> = {
     tours: {
       tag: "Archaeology & History",
       title: "Ek Balam Archaeological Guided Tour",
-      subtitle: "Explore the ancient 'Black Jaguar' city, its monumental Acropolis, and winged warrior stucco carvings.",
+      subtitle: "Explore the mysterious 'Star Jaguar' (Ek' Balam) city, its monumental Acropolis, and stucco carvings of rulers and winged beings.",
       items: [
         {
           id: "ekbalam-ruins",
@@ -450,7 +450,7 @@ export const CONTENT_BY_LANG: Record<Language, PageContent> = {
           category: "Archaeology & Cosmovision",
           duration: "1 Hour (approx.)",
           price: "Personalized Guide Fee",
-          description: "Detailed tour of the Acropolis, Central Plaza, Ball Court, the royal tomb of Ukit Kan Lek Tok', and the best-preserved stucco facades in Mesoamerica.",
+          description: "Detailed tour of the Acropolis, Central Plaza, Ball Court, the royal tomb of Ukit Kan Lek Tok', and the intricate stucco facades of rulers and winged beings.",
           includes: [
             "Official SECTUR NOM-08 Certified Guide",
             "Tour in English, French, Spanish, or Maya",
@@ -666,7 +666,7 @@ export const CONTENT_BY_LANG: Record<Language, PageContent> = {
     tours: {
       tag: "Archéologie & Histoire",
       title: "Visite Guidée du Site d'Ek Balam",
-      subtitle: "Explorez l'Acropole, le tombeau royal d'Ukit Kan Lek Tok' et les façades en stuc uniques au Mexique.",
+      subtitle: "Explorez la mystérieuse cité 'Étoile Jaguar' (Ek' Balam), ses fresques en stuc et le tombeau royal maya.",
       items: [
         {
           id: "ekbalam-ruins",
@@ -674,7 +674,7 @@ export const CONTENT_BY_LANG: Record<Language, PageContent> = {
           category: "Archéologie et Cosmovision",
           duration: "1 Heure (environ)",
           price: "Tarif guide personnalisé",
-          description: "Parcours guidé complet de l'Acropole, de la Place Centrale et des fresques en stuc représentant rois et guerriers ailés.",
+          description: "Parcours guidé complet de l'Acropole, de la Place Centrale, du tombeau d'Ukit Kan Lek Tok' et des fresques en stuc représentant rois et êtres ailés.",
           includes: [
             "Guide officiel certifié SECTUR NOM-08",
             "Visite guidée en Français, Anglais, Espagnol ou Maya",
