@@ -1,12 +1,46 @@
 import React from 'react';
 import { GUIDE_INFO } from '../data/content';
 
+/**
+ * Botón flotante de WhatsApp.
+ *
+ * ── Por qué no aparece desde el principio ───────────────────────────────────
+ * Estaba tapando el texto del hero en teléfono: un botón fijo en la esquina se
+ * monta sobre lo que haya debajo, y en la primera pantalla eso era el párrafo de
+ * presentación. Darle margen al texto no lo arregla —el botón flota sobre TODO lo
+ * que pase por esa esquina al desplazarse—, así que lo que cambia es CUÁNDO
+ * aparece: se queda oculto mientras se ve el hero, que ya tiene su propio botón
+ * de WhatsApp, y entra al pasar de largo. No se pierde ninguna vía de contacto.
+ */
 export const WhatsAppFloat: React.FC = () => {
   const text = encodeURIComponent('Hola Jesús, me gustaría consultar disponibilidad para reservar un tour en Ek Balam.');
   const whatsappUrl = `https://wa.me/${GUIDE_INFO.phone}?text=${text}`;
 
+  const [visible, setVisible] = React.useState(false);
+
+  React.useEffect(() => {
+    // Umbral relativo a la altura de la ventana en vez de a un píxel fijo: así
+    // vale igual en un teléfono corto que en un escritorio alto, y no acopla
+    // este componente a la altura del hero.
+    const onScroll = () => setVisible(window.scrollY > window.innerHeight * 0.6);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
+    };
+  }, []);
+
   return (
-    <aside aria-label="WhatsApp Contact" className="fixed bottom-6 right-6 z-50 flex items-center gap-3 group">
+    <aside
+      aria-label="WhatsApp Contact"
+      aria-hidden={!visible}
+      className={`fixed right-4 sm:right-6 z-50 flex items-center gap-3 group transition-opacity duration-300 motion-reduce:transition-none ${
+        visible ? 'opacity-100' : 'opacity-0 pointer-events-none'
+      }`}
+      style={{ bottom: 'max(1rem, env(safe-area-inset-bottom, 0px))' }}
+    >
       <div className="hidden sm:block bg-stone-900/90 text-stone-100 text-xs font-semibold px-3 py-1.5 rounded-full border border-stone-700 shadow-xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
         ¿Dudas o Reservaciones? ¡Escríbenos!
       </div>
@@ -14,6 +48,9 @@ export const WhatsAppFloat: React.FC = () => {
         href={whatsappUrl}
         target="_blank"
         rel="noopener noreferrer"
+        /* Oculto para el lector de pantalla también lo es para el tabulador: si no,
+           se puede enfocar un botón que no se ve. */
+        tabIndex={visible ? 0 : -1}
         className="w-14 h-14 bg-emerald-600 hover:bg-emerald-500 text-white rounded-full flex items-center justify-center shadow-2xl shadow-emerald-950/80 transition-transform hover:scale-110 active:scale-95 border-2 border-emerald-400/40"
         aria-label="Contactar por WhatsApp"
       >
