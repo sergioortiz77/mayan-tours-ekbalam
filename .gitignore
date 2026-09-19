@@ -29,3 +29,6 @@ yarn-error.log*
 # vercel & netlify
 .vercel
 .netlify
+
+# typescript
+tsconfig.tsbuildinfo
