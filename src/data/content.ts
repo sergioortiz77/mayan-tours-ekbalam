@@ -1,3 +1,8 @@
+// Import SOLO de tipo: `gallery.ts` importa `Language` de vuelta desde aquí, y un
+// import de valor haría un ciclo en tiempo de ejecución. `import type` se borra al
+// compilar, así que el ciclo no llega a existir.
+import type { GalleryGroupId } from './gallery';
+
 export type Language = 'es' | 'en' | 'fr';
 
 export interface TourItem {
@@ -38,10 +43,21 @@ export interface PageContent {
     about: string;
     tours: string;
     workshops: string;
+    gallery: string;
     transport: string;
     info: string;
     contact: string;
     bookNow: string;
+  };
+  gallery: {
+    tag: string;
+    title: string;
+    subtitle: string;
+    groups: Record<GalleryGroupId, { title: string; subtitle: string }>;
+    viewerClose: string;
+    viewerPrev: string;
+    viewerNext: string;
+    viewerCounter: string;
   };
   hero: {
     badge: string;
@@ -94,6 +110,7 @@ export interface PageContent {
     subtitle: string;
     vehicleTitle: string;
     vehicleDescription: string;
+    vehiclePhotoAlt: string;
     routesTitle: string;
     routes: TransportRoute[];
     cta: string;
@@ -178,6 +195,7 @@ export const CONTENT_BY_LANG: Record<Language, PageContent> = {
       about: "Sobre el Guía",
       tours: "Zona Arqueológica",
       workshops: "Talleres y Cultura",
+      gallery: "Galería",
       transport: "Transporte",
       info: "Información Práctica",
       contact: "Contacto",
@@ -285,12 +303,41 @@ export const CONTENT_BY_LANG: Record<Language, PageContent> = {
         },
       ],
     },
+    gallery: {
+      tag: "Galería",
+      title: "Ek Balam, en imágenes",
+      subtitle:
+        "Fotografías de los recorridos por la zona arqueológica, de los talleres en casa de las familias y de la vida del pueblo.",
+      groups: {
+        ciudad: {
+          title: "La ciudad de Ek Balam",
+          subtitle: "Piedra, estuco y selva: lo que sigue en pie de la ciudad antigua.",
+        },
+        fogon: {
+          title: "Sabores del fogón",
+          subtitle: "El maíz, el cacao y el fuego, en las cocinas de las familias que abren su casa.",
+        },
+        manos: {
+          title: "Manos que tejen",
+          subtitle: "Hamacas, urdimbres y bordados aprendidos de las maestras de la comunidad.",
+        },
+        pueblo: {
+          title: "El pueblo que recibe",
+          subtitle: "Casas de huano, enramadas y la gente que hace posible cada visita.",
+        },
+      },
+      viewerClose: "Cerrar",
+      viewerPrev: "Anterior",
+      viewerNext: "Siguiente",
+      viewerCounter: "de",
+    },
     transport: {
       tag: "Traslados Seguros",
       title: "Transportación Turística y Privada en Van",
       subtitle: "Unidad propia Volkswagen Transporter con aire acondicionado para tu familia o grupo.",
       vehicleTitle: "Comodidad y Flexibilidad en Todo Yucatán",
       vehicleDescription: "Contamos con Van propia para traslados cómodos, seguros y con aire acondicionado. Los precios se cotizan de manera transparente en función de la distancia y ruta requerida.",
+      vehiclePhotoAlt: "La van del guía, lista para salir hacia Ek Balam",
       routesTitle: "Rutas y Destinos Frecuentes",
       routes: [
         {
@@ -402,6 +449,7 @@ export const CONTENT_BY_LANG: Record<Language, PageContent> = {
       about: "About the Guide",
       tours: "Archaeology",
       workshops: "Workshops & Culture",
+      gallery: "Gallery",
       transport: "Transportation",
       info: "Visitor Info",
       contact: "Contact",
@@ -509,12 +557,41 @@ export const CONTENT_BY_LANG: Record<Language, PageContent> = {
         },
       ],
     },
+    gallery: {
+      tag: "Gallery",
+      title: "Ek Balam, in pictures",
+      subtitle:
+        "Photographs from the walks through the archaeological site, the workshops in family homes, and everyday life in the village.",
+      groups: {
+        ciudad: {
+          title: "The city of Ek Balam",
+          subtitle: "Stone, stucco and jungle: what still stands of the ancient city.",
+        },
+        fogon: {
+          title: "Flavours of the hearth",
+          subtitle: "Corn, cacao and fire, in the kitchens of the families who open their homes.",
+        },
+        manos: {
+          title: "Hands that weave",
+          subtitle: "Hammocks, warps and embroidery learned from the community's master artisans.",
+        },
+        pueblo: {
+          title: "The village that welcomes you",
+          subtitle: "Thatched houses, palm shelters, and the people who make every visit possible.",
+        },
+      },
+      viewerClose: "Close",
+      viewerPrev: "Previous",
+      viewerNext: "Next",
+      viewerCounter: "of",
+    },
     transport: {
       tag: "Private Transfers",
       title: "Private Tourist Van & Transport Services",
       subtitle: "Dedicated Volkswagen Transporter van with air conditioning for your family or travel group.",
       vehicleTitle: "Comfortable & Reliable Transport Across Yucatán",
       vehicleDescription: "We provide private, door-to-door transportation tailored to your itinerary. Clean, fully air-conditioned, and driven by experienced local drivers.",
+      vehiclePhotoAlt: "The guide's van, ready to set off for Ek Balam",
       routesTitle: "Popular Routes & Connections",
       routes: [
         {
@@ -626,6 +703,7 @@ export const CONTENT_BY_LANG: Record<Language, PageContent> = {
       about: "Le Guide",
       tours: "Archéologie",
       workshops: "Ateliers & Culture",
+      gallery: "Galerie",
       transport: "Transport",
       info: "Infos Pratiques",
       contact: "Contact",
@@ -733,12 +811,41 @@ export const CONTENT_BY_LANG: Record<Language, PageContent> = {
         },
       ],
     },
+    gallery: {
+      tag: "Galerie",
+      title: "Ek Balam, en images",
+      subtitle:
+        "Photographies des visites du site archéologique, des ateliers chez les familles et de la vie du village.",
+      groups: {
+        ciudad: {
+          title: "La cité d'Ek Balam",
+          subtitle: "Pierre, stuc et jungle : ce qui reste debout de la cité ancienne.",
+        },
+        fogon: {
+          title: "Saveurs du foyer",
+          subtitle: "Le maïs, le cacao et le feu, dans les cuisines des familles qui ouvrent leur maison.",
+        },
+        manos: {
+          title: "Des mains qui tissent",
+          subtitle: "Hamacs, chaînes et broderies appris auprès des artisanes de la communauté.",
+        },
+        pueblo: {
+          title: "Le village qui accueille",
+          subtitle: "Maisons de chaume, abris de palmes et les gens qui rendent chaque visite possible.",
+        },
+      },
+      viewerClose: "Fermer",
+      viewerPrev: "Précédent",
+      viewerNext: "Suivant",
+      viewerCounter: "sur",
+    },
     transport: {
       tag: "Transferts Privés",
       title: "Transport Privé et Circuits en Van",
       subtitle: "Van Volkswagen Transporter climatisée pour vos déplacements en toute sérénité.",
       vehicleTitle: "Confort et Sécurité dans Tout le Yucatán",
       vehicleDescription: "Véhicule spacieux et climatisé avec chauffeur local expérimenté pour tous vos trajets vers les aéroports, cénotes et villes coloniales.",
+      vehiclePhotoAlt: "Le van du guide, prêt à partir pour Ek Balam",
       routesTitle: "Destinations Principales",
       routes: [
         {

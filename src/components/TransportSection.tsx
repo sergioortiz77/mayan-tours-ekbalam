@@ -26,6 +26,15 @@ export const TransportSection: React.FC<TransportSectionProps> = ({ content }) =
 
         {/* Vehicle Highlights Banner */}
         <div className="bg-gradient-to-r from-stone-900 via-stone-800 to-stone-900 rounded-3xl p-8 sm:p-10 border border-stone-700/80 mb-12 shadow-2xl">
+          <img
+            src="/galeria/transporte-van.webp"
+            alt={content.vehiclePhotoAlt}
+            width={1280}
+            height={720}
+            loading="lazy"
+            decoding="async"
+            className="w-full h-auto rounded-2xl border border-stone-700/60 mb-8"
+          />
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             <div className="lg:col-span-8">
               <div className="flex items-center gap-3 mb-3">

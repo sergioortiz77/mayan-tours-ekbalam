@@ -18,17 +18,20 @@ export const Navbar: React.FC<NavbarProps> = ({ currentLang, onSelectLang, conte
   return (
     <header className="sticky top-0 z-50 bg-stone-900/95 backdrop-blur-md border-b border-stone-800 text-stone-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20">
+        <div className="flex items-center justify-between gap-3 py-3 md:py-0 md:h-20">
           {/* Logo / Brand */}
-          <a href="#" className="flex items-center space-x-3 group">
-            <div className="w-11 h-11 rounded-xl bg-gradient-to-tr from-amber-600 to-emerald-600 flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-emerald-950/40 group-hover:scale-105 transition-transform">
+          <a href="#" className="flex items-center space-x-3 group min-w-0">
+            <div className="w-11 h-11 flex-none rounded-xl bg-gradient-to-tr from-amber-600 to-emerald-600 flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-emerald-950/40 group-hover:scale-105 transition-transform">
               <span>🌿</span>
             </div>
-            <div>
-              <span className="text-lg font-bold tracking-tight text-amber-400 group-hover:text-amber-300 transition-colors block leading-tight">
+            <div className="min-w-0">
+              <span className="text-base md:text-lg font-bold tracking-tight text-amber-400 group-hover:text-amber-300 transition-colors block leading-tight">
                 {GUIDE_INFO.brand}
               </span>
-              <span className="text-xs text-stone-400 font-medium block">
+              {/* En teléfono se oculta: repite «Ek Balam», que ya está en la marca
+                  justo encima y otra vez en el titular, y era lo que hacía que la
+                  cabecera creciera a cuatro líneas. */}
+              <span className="text-xs text-stone-400 font-medium hidden sm:block">
                 Ek Balam • Yucatán, México
               </span>
             </div>
@@ -39,6 +42,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentLang, onSelectLang, conte
             <a href="#sobre-el-guia" className="hover:text-amber-400 transition-colors">{content.about}</a>
             <a href="#arqueologia" className="hover:text-amber-400 transition-colors">{content.tours}</a>
             <a href="#talleres" className="hover:text-amber-400 transition-colors">{content.workshops}</a>
+            <a href="#galeria" className="hover:text-amber-400 transition-colors">{content.gallery}</a>
             <a href="#transporte" className="hover:text-amber-400 transition-colors">{content.transport}</a>
             <a href="#guia-visitante" className="hover:text-amber-400 transition-colors">{content.info}</a>
             <a href="#contacto" className="hover:text-amber-400 transition-colors">{content.contact}</a>
@@ -78,7 +82,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentLang, onSelectLang, conte
           </div>
 
           {/* Mobile Menu Button */}
-          <div className="flex md:hidden items-center space-x-2">
+          <div className="flex md:hidden flex-none items-center space-x-2">
             <div className="inline-flex bg-stone-800 p-0.5 rounded-lg border border-stone-700 text-xs font-semibold mr-1">
               {(['es', 'en', 'fr'] as Language[]).map((l) => (
                 <button
@@ -125,6 +129,13 @@ export const Navbar: React.FC<NavbarProps> = ({ currentLang, onSelectLang, conte
               className="block px-3 py-2 rounded-lg text-base font-medium text-stone-200 hover:bg-stone-800"
             >
               {content.workshops}
+            </a>
+            <a
+              href="#galeria"
+              onClick={() => setMobileMenuOpen(false)}
+              className="block px-3 py-2 rounded-lg text-base font-medium text-stone-200 hover:bg-stone-800"
+            >
+              {content.gallery}
             </a>
             <a
               href="#transporte"

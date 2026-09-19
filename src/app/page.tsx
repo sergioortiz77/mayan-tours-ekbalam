@@ -7,6 +7,7 @@ import { Hero } from '../components/Hero';
 import { AboutGuide } from '../components/AboutGuide';
 import { ToursSection } from '../components/ToursSection';
 import { WorkshopsSection } from '../components/WorkshopsSection';
+import { GallerySection } from '../components/GallerySection';
 import { TransportSection } from '../components/TransportSection';
 import { ComplementarySection } from '../components/ComplementarySection';
 import { VisitorGuide } from '../components/VisitorGuide';
@@ -31,6 +32,7 @@ export default function HomePage() {
         <AboutGuide content={t.about} />
         <ToursSection content={t.tours} />
         <WorkshopsSection content={t.workshops} />
+        <GallerySection content={t.gallery} lang={lang} />
         <TransportSection content={t.transport} />
         <ComplementarySection content={t.complementary} />
         <VisitorGuide content={t.visitorGuide} />
