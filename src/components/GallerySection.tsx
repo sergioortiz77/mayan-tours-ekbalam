@@ -28,10 +28,39 @@ export const GallerySection: React.FC<GallerySectionProps> = ({ content, lang })
   const [openIndex, setOpenIndex] = React.useState<number | null>(null);
   const isOpen = openIndex !== null;
 
-  const close = React.useCallback(() => setOpenIndex(null), []);
+  /**
+   * El visor añade una entrada al historial al abrirse, para que el gesto de
+   * volver del teléfono lo CIERRE en vez de sacar de la página. Cerrar con la ✕
+   * o con Escape retrocede, así esa entrada se consume y no queda basura en el
+   * historial. Moverse entre fotos no añade entradas.
+   */
+  const open = React.useCallback((i: number) => {
+    setOpenIndex(i);
+    try {
+      window.history.pushState({ ekViewer: true }, '');
+    } catch {
+      /* si el historial no está disponible, el visor sigue funcionando */
+    }
+  }, []);
+
+  const close = React.useCallback(() => {
+    if (typeof window !== 'undefined' && window.history.state?.ekViewer) {
+      window.history.back(); // el popstate de abajo es quien cierra
+    } else {
+      setOpenIndex(null);
+    }
+  }, []);
+
   const go = React.useCallback((delta: number) => {
     setOpenIndex((i) => (i === null ? i : (i + delta + ALL_PHOTOS.length) % ALL_PHOTOS.length));
   }, []);
+
+  React.useEffect(() => {
+    if (!isOpen) return;
+    const onPop = () => setOpenIndex(null);
+    window.addEventListener('popstate', onPop);
+    return () => window.removeEventListener('popstate', onPop);
+  }, [isOpen]);
 
   // Teclado y bloqueo del scroll de fondo mientras el visor está abierto.
   React.useEffect(() => {
@@ -104,7 +133,7 @@ export const GallerySection: React.FC<GallerySectionProps> = ({ content, lang })
                       <button
                         key={photo.src}
                         type="button"
-                        onClick={() => setOpenIndex(i)}
+                        onClick={() => open(i)}
                         className="mb-4 block w-full break-inside-avoid overflow-hidden rounded-2xl border border-stone-800 bg-stone-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 group"
                       >
                         <img
@@ -131,7 +160,11 @@ export const GallerySection: React.FC<GallerySectionProps> = ({ content, lang })
           role="dialog"
           aria-modal="true"
           aria-label={current.alt[lang]}
-          className="fixed inset-0 z-[60] bg-stone-950/97 backdrop-blur-sm flex flex-col"
+          /* Fondo OPACO y sin modificador de opacidad a propósito: `bg-stone-950/97`
+             no existe en la escala de Tailwind, así que no compilaba a ninguna
+             regla y el visor se quedaba transparente sobre la página. Una clase
+             con un valor fuera de escala no rompe el build, solo deja de pintar. */
+          className="fixed inset-0 z-[60] bg-stone-950 flex flex-col"
           onTouchStart={onTouchStart}
           onTouchEnd={onTouchEnd}
         >
@@ -147,7 +180,7 @@ export const GallerySection: React.FC<GallerySectionProps> = ({ content, lang })
               type="button"
               onClick={close}
               aria-label={content.viewerClose}
-              className="w-11 h-11 flex items-center justify-center rounded-full bg-stone-800/90 text-stone-200 text-xl leading-none hover:bg-stone-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
+              className="w-12 h-12 flex items-center justify-center rounded-full bg-stone-800 border border-stone-600 text-stone-100 text-xl leading-none hover:bg-stone-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
             >
               ✕
             </button>
@@ -172,12 +205,15 @@ export const GallerySection: React.FC<GallerySectionProps> = ({ content, lang })
             <p className="text-center text-sm text-stone-300 max-w-2xl mx-auto">
               {current.alt[lang]}
             </p>
-            <div className="flex items-center justify-center gap-4">
+            {/* Botones anchos y con borde: son la única forma de avanzar para
+                quien no descubre el gesto de deslizar, y sobre una foto clara un
+                botón semitransparente desaparece. */}
+            <div className="flex items-center justify-center gap-3">
               <button
                 type="button"
                 onClick={() => go(-1)}
                 aria-label={content.viewerPrev}
-                className="w-14 h-12 flex items-center justify-center rounded-xl bg-stone-800/90 text-stone-100 text-xl hover:bg-stone-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
+                className="flex-1 max-w-[9rem] h-14 flex items-center justify-center gap-2 rounded-xl bg-stone-800 border border-stone-600 text-stone-100 text-2xl leading-none hover:bg-stone-700 active:bg-stone-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
               >
                 ‹
               </button>
@@ -185,7 +221,7 @@ export const GallerySection: React.FC<GallerySectionProps> = ({ content, lang })
                 type="button"
                 onClick={() => go(1)}
                 aria-label={content.viewerNext}
-                className="w-14 h-12 flex items-center justify-center rounded-xl bg-stone-800/90 text-stone-100 text-xl hover:bg-stone-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
+                className="flex-1 max-w-[9rem] h-14 flex items-center justify-center gap-2 rounded-xl bg-stone-800 border border-stone-600 text-stone-100 text-2xl leading-none hover:bg-stone-700 active:bg-stone-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
               >
                 ›
               </button>
